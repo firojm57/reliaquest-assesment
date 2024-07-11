@@ -3,13 +3,15 @@ package com.example.rqchallenge.employees;
 import com.example.rqchallenge.model.Employee;
 import com.example.rqchallenge.service.employee.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
-@RestController("/employees")
+@RestController
+@RequestMapping("/employees")
 public class EmployeeController implements IEmployeeController {
 
     @Autowired
@@ -50,7 +52,10 @@ public class EmployeeController implements IEmployeeController {
     }
 
     @Override
-    @PostMapping()
+    @PostMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public ResponseEntity<Employee> createEmployee(@RequestBody Map<String, Object> employeeInput) {
         Employee employee = employeeService.createEmployee(employeeInput);
         return ResponseEntity.ok(employee);

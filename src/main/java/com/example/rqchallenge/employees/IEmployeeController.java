@@ -22,5 +22,4 @@ public interface IEmployeeController {
     ResponseEntity<Employee> createEmployee(@RequestBody Map<String, Object> employeeInput);
 
     ResponseEntity<String> deleteEmployeeById(@PathVariable String id);
-
 }

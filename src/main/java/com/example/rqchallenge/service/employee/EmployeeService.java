@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,7 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public List<Employee> getAllEmployees() {
         ResponseEntity<JsonNode> responseEntity = apiService.get(Constants.EMPLOYEES);
+        logger.info("Endpoint: " + Constants.EMPLOYEES);
         return processResponse(responseEntity, new TypeReference<>() {});
     }
 
@@ -65,7 +67,7 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public List<String> getTopTenHighestEarningEmployeeNames() {
         List<String> sortedEmpNames = getAllEmployees()
-                .stream().sorted()
+                .stream().sorted((o1, o2) -> o2.getEmployeeSalary() - o1.getEmployeeSalary())
                 .map(Employee::getEmployeeName)
                 .collect(Collectors.toList());
         return sortedEmpNames.subList(0, Math.min(sortedEmpNames.size(), 10));
@@ -79,8 +81,9 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public String deleteEmployeeById(String id) {
-        ResponseEntity<JsonNode> responseEntity = apiService.get(Constants.DELETE + "/" + id);
-        return processResponse(responseEntity, new TypeReference<>() {});
+        Employee employee = getEmployeeById(id);
+        apiService.delete(Constants.DELETE + "/" + id);
+        return employee.getEmployeeName();
     }
 
     private <T> T processResponse(ResponseEntity<JsonNode> responseEntity, TypeReference<T> type) {

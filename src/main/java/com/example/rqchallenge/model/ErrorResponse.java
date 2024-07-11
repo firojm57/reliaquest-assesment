@@ -1,14 +1,24 @@
 package com.example.rqchallenge.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ErrorResponse {
+
+    @JsonProperty("message")
     private String message;
-    private String details;
+
+    @JsonProperty("status")
+    private String status;
 
     public ErrorResponse() {}
 
-    public ErrorResponse(String message, String details) {
+    public ErrorResponse(String message, String status) {
         this.message = message;
-        this.details = details;
+        this.status = status;
     }
 
     public String getMessage() {
@@ -19,11 +29,11 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public String getDetails() {
-        return details;
+    public String getStatus() {
+        return status;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

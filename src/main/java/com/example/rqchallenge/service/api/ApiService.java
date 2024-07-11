@@ -24,19 +24,19 @@ public class ApiService implements IApiService {
 
     @Override
     public ResponseEntity<JsonNode> get(String endpoint) {
-        logger.info("GET Api call for: {}: {}", apiBaseUrl, endpoint);
+        logger.info("GET Api call for: {}{}", apiBaseUrl, endpoint);
         return restTemplate.getForEntity(apiBaseUrl + endpoint, JsonNode.class);
     }
 
     @Override
     public ResponseEntity<JsonNode> post(String endpoint, Map<String, Object> request) {
-        logger.info("POST Api call for: {}: {}", apiBaseUrl, endpoint);
+        logger.info("POST Api call for: {}{}", apiBaseUrl, endpoint);
         return restTemplate.postForEntity(apiBaseUrl + endpoint, request, JsonNode.class);
     }
 
     @Override
     public void delete(String endpoint) {
-        logger.info("DELETE Api call for: {}: {}", apiBaseUrl, endpoint);
+        logger.info("DELETE Api call for: {}{}", apiBaseUrl, endpoint);
         restTemplate.delete(apiBaseUrl + endpoint);
     }
 }
