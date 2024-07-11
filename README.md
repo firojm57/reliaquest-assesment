@@ -119,8 +119,12 @@ deleteEmployee(String id)
 
 ### Developer's Note
 This is the one test class which covers end-to-end testing: com.example.rqchallenge.RqChallengeApplicationTests
+
 EmployeeController calls EmployeeService
+
 EmployeService calls ApiService
+
 ApiService calls RestTemplate get, post, delete methods
+
 
 In Junit only mocked Class is RestTemplate, everything else is running on real objects
